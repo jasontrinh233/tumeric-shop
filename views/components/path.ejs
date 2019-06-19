@@ -1,0 +1,31 @@
+<!-- HTML -->
+<ul class="path" id="path">
+
+   <!-- List of site directory goes here -->
+
+</ul>
+
+<!-- JavaScript -->
+<script>
+   /*
+    * Will generate appropriate site path accrodingly
+    * to current site.
+    */
+   let link = <%- JSON.stringify(path.link); -%>; // load from server
+   let dirs = <%- JSON.stringify(path.dirs); -%>; // load from server
+
+   if(link.length < 2) { // main page
+      let li_tag = document.createElement("LI");
+      li_tag.innerHTML = `${dirs[dirs.length-1]}`;
+      document.getElementById("path").appendChild(li_tag);
+   } else { // children pages
+      for(let i = 0; i < link.length-1; i++) {
+         let li_tag = document.createElement("LI");
+         li_tag.innerHTML = `<a href="${link[i]}">${dirs[i]}</a>`;
+         document.getElementById("path").appendChild(li_tag);
+      }
+      let li_last = document.createElement("LI");
+      li_last.innerHTML = `${dirs[dirs.length-1]}`;
+      document.getElementById("path").appendChild(li_last);
+   }
+</script>

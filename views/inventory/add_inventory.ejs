@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>VLXDBK | <%= title %></title>
+
+    <!-- Fontawesome -->
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
+
+    <!-- CSS -->
+    <link rel='stylesheet' href='/stylesheets/inventory/add_inventory.css' />
+  </head>
+  <body>
+
+    <!-- Nav bar -->  
+    <%- include('../components/navbar'); -%>
+
+    <!-- Wrapper -->
+    <div class="wrapper">
+      
+    <!-- Label -->
+    <%- include('../components/label'); -%>
+
+    <!-- Path -->
+    <%- include('../components/path'); -%>
+
+    <!-- Search box -->
+    <%- include('../components/search-box') -%>
+
+    <!-- MAIN -->
+    <div class="main">
+      <h1>Nhập kho</h1>
+
+      <form id="add-inventory-form">
+        <div class="row" id="row-1">
+          <div style="width: 25%; float: left;">
+            1. Loại sản phẩm: <select id="row-1-type_of_product">
+            <option value=""> ---</option>
+            <option value="Tinh bột Nghệ">Tinh bột Nghệ</option>
+            <option value="Tinh bột Gừng">Tinh bột Gừng</option>
+            <option value="Cucumin Nghệ">Cucumin Nghệ</option>
+            <option value="Hà thủ ô">Hà thủ ô</option>
+            </select><span style="color: red;"> *</span>
+            <br>
+            <p id="error-1-type_of_product"></p>
+          </div>
+
+          <div style="width: 17%; float: left;">
+            Khối lượng (kg): <input id="row-1-weight" type="text" name="weight" maxlength="5" size="5"><span style="color: red;"> *</span>
+            <br>
+            <p id="error-1-weight"></p>
+          </div>
+
+          <div style="width: 32%; float: left;">
+            Ngày nhập kho: <input id="row-1-date_created" type="text" name="date_created" size="10" maxlength="10"> <i>( vd: 01/01/2019 )</i><span style="color: red;"> *</span>
+            <br>
+            <p id="error-1-date_created"></p>
+          </div>
+
+          <div style="width: 25%; float: left;">
+            Ghi chú: <textarea id="row-1-notes" rows="1" cols="25"></textarea>
+            <br>
+            <p id="error-1-notes"></p>
+          </div>
+        </div>
+      </form>
+        
+      <div id="insertRows">
+        Thêm dòng: <input id="addRowInput" type="text" maxlength="2" size="2" value=""><button id="addRow">Thêm</button>
+      </div>
+      
+      <br />
+
+      <div id="formBtn">
+        <button id="cancelInventoryBtn" type="button" onclick="location.href='/inventory';">Huỷ</button>
+        <button id="addInventoryBtn" type="submit">Thêm</button>
+      </div>
+
+      <p style="float: right;"><span style="color: red;">*</span> = Bắt buộc.</p>
+    </div>
+
+  <!-- Footer -->
+  <%- include('../components/footer'); -%>
+
+  <!-- Javascripts -->
+  <script src="/javascripts/jquery-3.3.1.min.js"></script>
+
+  <!-- jQuery -->
+  <script>
+    $(document).ready(() => {
+    let row_index = 1;
+
+      ///////////////////////////////
+      //       Add more rows       //
+      ///////////////////////////////
+      $('#addRow').click(function() {
+        const numRows = $('#addRowInput').val();
+
+        if (numRows !== null) {
+          for (let i = 0; i < numRows; i++) {
+            row_index++; // select next row
+            $('#add-inventory-form').append(`
+              <div class="row" id="row-${row_index}">
+                <div style="width: 25%; float: left;">
+                  ${row_index}. Loại sản phẩm: <select id="row-${row_index}-type_of_product" >
+                  <option value=""> ---</option>
+                  <option value="Tinh bột Nghệ">Tinh bột Nghệ</option>
+                  <option value="Tinh bột Gừng">Tinh bột Gừng</option>
+                  <option value="Cucumin Nghệ">Cucumin Nghệ</option>
+                  <option value="Hà thủ ô">Hà thủ ô</option>
+                  </select><span style="color: red;"> *</span>
+                  <br>
+                  <p id="error-${row_index}-type_of_product"></p>
+                </div>
+
+                <div id="div-${row_index}-weight" style="width: 17%; float: left;">
+                  Khối lượng (kg): <input id="row-${row_index}-weight" type="text" name="weight" maxlength="5" size="5"><span style="color: red;"> *</span>
+                  <br>
+                  <p id="error-${row_index}-weight"></p>
+                </div>
+
+                <div id="id="div-${row_index}-date_created" style="width: 32%; float: left;">
+                  Ngày nhập kho: <input id="row-${row_index}-date_created" type="text" name="date_created" size="10" maxlength="10"> <i>( vd: 01/01/2019 )</i><span style="color: red;"> *</span>
+                  <br>
+                  <p id="error-${row_index}-date_created"></p>
+                </div>
+
+                <div id="div-${row_index}-notes" style="width: 25%; float: left;">
+                  Ghi chú: <textarea id="row-${row_index}-notes" rows="1" cols="25"></textarea>
+                </div>
+              </div>
+            `);
+          } // END FOR
+        } // END IF
+      }); // END ADD ROWS
+        
+      /////////////////////////////////////////
+      //             Submit data             //
+      /////////////////////////////////////////
+      $('#addInventoryBtn').click(function(e) {
+        e.preventDefault();
+
+        // create array contains every row's data
+        let rows_array = [];
+        for (let i = 1; i <= row_index; i++) { // row starts from 1
+          const row_data = {
+            type_of_product: $(`#row-${i}-type_of_product`).val(),
+            weight: $(`#row-${i}-weight`).val(),
+            date_created: $(`#row-${i}-date_created`).val(),
+            notes: $(`#row-${i}-notes`).val(),
+            row: i  // to remember what row this is
+          };
+
+          // only takes row that got filled
+          if (row_data.type_of_product !== "" || row_data.weight !== "" || row_data.date_created !== "" || row_data.notes !== "") {
+            rows_array.push(row_data);
+          }
+        }
+
+        // submit data to server
+        $.ajax({
+          type: 'POST',
+          url: '/inventory/add/submitted',
+          contentType: 'application/json',  // to send array via ajax
+          processData: false,               // to send array via ajax
+          data: JSON.stringify(rows_array), // to send array via ajax
+          success: function(response) {
+            console.log(response);
+            $('.main').html(`
+              <div class="success">
+                <h1>Nhập kho thành công!</h1>
+                <a href="/inventory">Quay về Kho hàng</a>
+              <div>
+            `);
+          },
+          error: function(jqXHR, textStatus, errorThrown) {
+            if (jqXHR.status != 200) {
+              const errors_array = jqXHR.responseJSON;
+
+            // DEBUG
+              if (errors_array !== null) {
+                for (let i = 0; i < errors_array.length; i++) {
+                  // handle `type_of_product` error
+                  if (errors_array[i].msg.type_of_product !== undefined) {
+                    $(`#error-${errors_array[i].row}-type_of_product`).html(
+                      `<font color="red">${errors_array[i].msg.type_of_product}</font>`
+                    );
+                    $(`#row-${errors_array[i].row}`).css('border', '1px solid red');
+                  }
+
+                  // handle `weight` error
+                  if (errors_array[i].msg.weight !== undefined) {
+                    $(`#error-${errors_array[i].row}-weight`).html(
+                      `<font color="red">${errors_array[i].msg.weight}</font>`
+                    );
+                    $(`#row-${errors_array[i].row}`).css('border', '1px solid red');
+                  }
+                  
+                  // handle `date_created` error
+                  if (errors_array[i].msg.date_created !== undefined) {
+                    $(`#error-${errors_array[i].row}-date_created`).html(
+                      `<font color="red">${errors_array[i].msg.date_created}</font>`
+                    );
+                    $(`#row-${errors_array[i].row}`).css('border', '1px solid red');
+                  }
+                } // END FOR
+              } 
+            }
+          } // END ERROR
+        }); // END AJAX
+      }); // END SUBMIT DATA
+    });
+    </script>
+  </body>
+</html>

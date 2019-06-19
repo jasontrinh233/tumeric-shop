@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>VLXDBK | <%= title %></title>
+
+    <!-- Fontawesome -->
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
+
+    <!-- CSS -->
+    <link rel='stylesheet' href='/stylesheets/inventory/style.css' />
+    <link rel="stylesheet" href="/stylesheets/datatables/datatables.min.css">
+    <link rel="stylesheet" href="/stylesheets/Chart.min.css">
+
+  </head>
+  <body>
+
+    <!-- Nav bar -->  
+    <%- include('../components/navbar'); -%>
+
+    <!-- Wrapper -->
+    <div class="wrapper">
+      
+    <!-- Label -->
+    <%- include('../components/label'); -%>
+
+    <!-- Path -->
+    <%- include('../components/path'); -%>
+
+    <!-- Dashboard -->
+    <div class="dashboard">
+      <div id="dash1" class="dash">
+        <p>Dash 1</p>
+        <p id="dash1" style="color: #dc3545;"></p>
+      </div>
+      <div id="dash2" class="dash">
+        <p>Dash 2</p>
+        <p id="dash2" style="color: #28a745;"></p>
+      </div>
+      <div id="dash3" class="dash">
+        <p>Tổng KL nhập tháng (kg)</p>
+        <p id="total-inventory-month" style="color: #28a745;"></p>
+      </div>
+      <div id="dash4" class="dash">
+        <p>Tổng KL nhập năm (kg)</p>
+        <p id="total-inventory-year" style="color: #ffc107;"></p>
+      </div>
+    </div>
+    
+    <!-- Dashboard paginations -->
+    <div id="dashboard-paginations">
+      Tháng: <select id="dashboard-month">
+        <!-- List of month goes here -->
+      </select>
+      Năm: <select id="dashboard-year">
+        <!-- List of year goes here -->
+      </select>
+      <button id="dashboard-button" type="button">Tìm ngày</button>
+    </div>
+
+    <!-- Search box -->
+    <%- include('../components/search-box'); -%>
+
+    <!-- MAIN -->
+    <div class="main">
+      <h1>Danh sách kho</h1>
+
+      <!-- Add Inventory button -->
+      <a href="/inventory/add" ><i class="fas fa-plus"></i> Nhập kho</a>
+
+      <!-- TABLE -->
+      <table class="compact cell-border" id="inventoryTable" style="width: 85%;">
+        <thead>
+          <tr>
+            <th>Mã đơn</th>
+            <th>Loại sản phẩm</th>
+            <th>Khối lượng (kg)</th>
+            <th>Ngày nhập</th>
+            <th>Ghi chú</th>
+          </tr>
+        </thead>
+        <tbody>
+          <!-- Table data generates here -->
+        </tbody>
+      </table>
+    </div>
+  
+    <!-- Footer -->
+    <%- include('../components/footer'); -%>
+
+    <!-- JS Libs -->
+    <script src="/javascripts/jquery-3.3.1.min.js"></script>
+    <script src="/javascripts/datatables/datatables.min.js"></script>
+    <script src="/javascripts/Chart.min.js"></script>
+
+    <!-- jQuery -->
+    <script>
+    $(document).ready( () => {
+      // Load data from server (`inventory.js`)
+      const data = <%- tableData -%>; 
+      
+      //////////////////////////////////////////////
+      //                Datatables                //
+      //////////////////////////////////////////////
+      const table = $('#inventoryTable').DataTable({
+        columnDefs: [ // adjust column size
+          {"width": "8%", "targets": 0},
+          {"width": "15%", "className": "dt-body-left", "targets": 1},
+          {"width": "12%", "className": "dt-body-left", "targets": 2},
+          {"width": "17%", "targets": 3},
+          {"width": "17%", "className": "dt-body-left", "targets": 4},
+        ],
+        dom: "f", // allow `filter`
+        data: data,
+        columns: [
+          { data: 'id' },
+          { data: 'type_of_product' },
+          { data: 'weight' },
+          { data: 'date_created' },
+          { data: 'notes' }
+        ],
+        pageLength: data.length,
+        order: [[1, 'desc']]
+      });
+      
+      // custom empty table message
+      if($('.dataTables_empty')) {
+        $('.dataTables_empty').html('Không có dữ liệu...');
+      }
+
+      // hide built-in search input
+      $('#inventoryTable_filter').hide();
+
+      // custom search field
+      $("#search-input").on("input", function(e) {
+        e.preventDefault();
+        table.search($(this).val()).draw(); 
+
+        // custom `No result` message
+        if($('.dataTables_empty')) {
+          $('.dataTables_empty').html('Không có kết quả...');
+        }
+      });
+
+      // custom filter field
+      $('#type_of_product_select').change( function() {
+        table.search($(this).val()).draw();
+
+        // custom `No result` message
+        if($('.dataTables_empty')) {
+          $('.dataTables_empty').html('Không có kết quả...');
+        }
+      });
+      
+
+      ///////////////////////////////////////////
+      //          Dashboard Paginations        //
+      ///////////////////////////////////////////
+      $('#dashboard-year').append(`
+        <option value="2016">2016</option>
+      `);
+      
+      $('#dashboard-month').append(`
+        <option value="6">6</option>
+        <option value="5">5</option>
+        <option value="4">4</option>
+      `);
+
+
+      ///////////////////////////////////////
+      //          Dashboard setups         //
+      ///////////////////////////////////////
+
+      // `total-inventory-year`
+      let total_inventory_year = 0;
+      for (let i = 0; i < data.length; i++) {
+        total_inventory_year = total_inventory_year + parseFloat(data[i].weight);
+      }
+      $('#total-inventory-year').html(`${total_inventory_year}`);
+
+      // Returns date object
+      function getDate(str) {
+        const d = str.split('/');
+        return {
+          day: parseInt(d[0]),
+          month: parseInt(d[1]),
+          year: parseInt(d[2])
+        }
+      }
+
+      // // Returns max year of table
+      // function getLatestDate(data_array) {
+      //   // get `max_year`
+      //   let max_year = 0;
+        
+      //   for (let i = 0; i < data_array.length; i++) {
+      //     const d = getDate(data_array[i].date_created);
+      //     if (d.year > max_year)
+      //       max_year = d.year;
+      //   }
+
+      //   // get `max_month`
+      //   let max_month = 0;
+      //   for (let i = 0; i < data_array.length; i++) {
+      //     const d = getDate(data_array[i].date_created);
+      //     if (d.year === max_year) {
+      //       if (d.month > max_month)
+      //         max_month = d.month;
+      //     }
+      //   }
+
+      //   return {
+      //     max_month,
+      //     max_year
+      //   }
+      // }
+
+      // get most recent date
+      // const latestDate = getLatestDate(data);
+
+
+      const dashboard_year = parseInt($('#dashboard-year').val());
+      const dashboard_month = parseInt($('#dashboard-month').val());
+
+      // `total_inventory_month`
+      let total_inventory_month = 0;
+      for (let i = 0; i < data.length; i++) {
+        const d = getDate(data[i].date_created); 
+        if (d.year === dashboard_year) { 
+          if (d.month === dashboard_month) { 
+            total_inventory_month = total_inventory_month + parseFloat(data[i].weight);
+          }
+        } 
+      } 
+      $('#total-inventory-month').html(`${total_inventory_month}`);
+
+      
+
+    });
+    </script>
+  </body>
+</html>

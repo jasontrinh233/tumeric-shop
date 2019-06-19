@@ -1,0 +1,59 @@
+<!-- HTML -->
+<div id="<%= searchId %>">
+    <div>
+      Từ khoá: <input type="text" id="search-input" placeholder="Nhập từ khoá">
+    </div>
+</div>
+
+<!-- JavaScripts -->
+<script> 
+  let searchId = `<%= searchId %>`;
+  let searchType = document.getElementById(searchId);
+
+  // Inventory search-box
+  if(searchId === 'inventorySearch' || searchId === 'addInventorySearch') {
+    searchType.classList.add('inventory-search'); // add class for styling
+
+    // Type of product selectoin div
+    let type_of_product_div = document.createElement('div');
+    type_of_product_div.innerHTML = `
+      Loại sản phẩm: <select id="type_of_product_select">
+          <option value=""> ---</option>
+          <option value="Tinh bột Nghệ">Tinh bột Nghệ</option>
+          <option value="Tinh bột Gừng">Tinh bột Gừng</option>
+          <option value="Cucumin Nghệ">Cucumin Nghệ</option>
+          <option value="Hà thủ ô">Hà thủ ô</option>
+        </select>`;
+    searchType.appendChild(type_of_product_div);
+  }
+  //TODO: create more Search Type
+  else if (searchId === 'orderSearch' || searchId === 'addOrderSearch') {
+    searchType.classList.add('order-search'); // add class for styling
+
+    // Type of product selectoin div
+    let type_of_product_div = document.createElement('div');
+    type_of_product_div.innerHTML = `
+      Loại sản phẩm: <select id="type_of_product_select">
+          <option value=""> ---</option>
+          <option value="Tinh bột Nghệ">Tinh bột Nghệ</option>
+          <option value="Tinh bột Gừng">Tinh bột Gừng</option>
+          <option value="Cucumin Nghệ">Cucumin Nghệ</option>
+          <option value="Hà thủ ô">Hà thủ ô</option>
+        </select>`;
+    searchType.appendChild(type_of_product_div);
+
+    // Price per unit selection div
+    let price_per_unit_div = document.createElement('div');
+    price_per_unit_div.innerHTML = `
+      Đơn giá: <select id="price_per_unit_select">
+          <option value=""> ---</option>
+          <option value="500000">500,000 VNĐ</option>
+          <option value="600000">600,000 VNĐ</option>
+          <option value="1000000">1,000,000 VNĐ</option>
+          <option value="1200000">1,200,000 VNĐ</option>
+        </select>`;
+    searchType.appendChild(price_per_unit_div);
+
+  }
+
+</script>

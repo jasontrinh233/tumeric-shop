@@ -1,0 +1,210 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: '-apple-system', BlinkMacSystemFont, sans-serif;
+}
+
+/*========= Nav bar =========*/
+.navbar {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  width: 960px;
+  margin: 15px auto;
+  overflow: hidden;
+}
+.navbar a {
+  border: 2px solid black;
+  background-color: #006599;
+  color: #fff;
+  text-align: center;
+  text-decoration: none;
+  font-size: 15px;
+  width: 150px;
+  height: 40px;
+  padding: 8px 0;
+  margin: 0 auto;
+}
+.navbar a:hover {
+  background-color: #5ca326;
+  color: black;
+}
+
+/*========= Wrapper =========*/
+.wrapper {
+  width: 95%;
+  margin: 0 auto;
+  font-size: 14px;
+}
+
+/* Label */
+.label {
+  background: #5ca326;
+  border: 1px solid black;
+  height: 45px;
+  padding: 10px 15px;
+}
+.label-title {
+  font-size: 20px;
+}
+.label-time {
+  float: right;
+  font-size: 12px;
+  font-style: italic;
+  margin-top: 5px;
+}
+
+/* Path */
+ul.path {
+  margin: 15px auto;
+  width: 95%;
+  padding: 10px 16px;
+  list-style: none;
+  background-color: #f0f0f0;
+  border: 1px solid black;
+}
+ul.path li {
+  display: inline;
+  font-size: 16px;
+}
+ul.path li+li:before {
+  padding: 8px;
+  color: black;
+  content: ">\00a0";
+}
+ul.path li a {
+  color: #0275d8;
+  text-decoration: none;
+}
+ul.path li a:hover {
+  color: #01447e;
+  text-decoration: underline;
+}
+
+/* Dashboard */
+.dashboard {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  grid-gap: 10px;
+  width: 95%;
+  height: 150px;
+  margin: 15px auto;
+  text-align: center;
+  padding: 10px;
+}
+.dash {
+  display: grid;
+  grid-template-rows: 1fr 2fr; 
+  background: #f0f0f0;
+  width: 250px;
+  height: 120px;
+  margin: auto;
+}
+.dash > p:first-child {
+  font-size: 14px;
+  padding: 12px;
+  text-decoration: underline;
+}
+.dash > p:nth-child(2) {
+  font-size: 32px;
+  font-weight: bold;
+  padding: 10px;
+}
+
+/* Inventory class Search box */
+.inventory-search {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  width: 95%;
+  height: 50px;
+  margin: 0 auto;
+  background-color: #f0f0f0;
+  border: 1px solid black;
+  text-align: center;
+  padding: 15px;
+}
+.inventory-search > div > input {
+  border: 1px solid #cdcdcd;
+  padding-left: 7px;
+  width: 170px;
+  height: 20px;
+  margin: 0 2px;
+}
+::-webkit-input-placeholder {
+  font-style: italic;
+}
+
+/*========= Main =========*/
+.main {
+  margin: 15px auto;
+  width: 95%;
+  border: 1px solid black;
+  padding-bottom: 15px;
+}
+
+h1 {
+  width: 400px;
+  margin: 30px auto;
+  text-decoration: underline;
+  text-align: center;
+}
+
+/* Add Inventory button */
+.main > a {
+  float: right;
+  margin-right: 10%;
+  margin-bottom: 20px;
+  border: 1px solid black;
+  background-color: #006599;
+  color: #fff;
+  width: 100px;
+  height: 20px;
+  padding: 1px;
+  font-size: 12px;
+  text-align: center;
+  text-decoration: none;
+}
+.main > a:hover {
+  background-color: #5ca326;
+  color: black;
+}
+
+/* Table */
+#inventoryTable {
+  margin: 0 auto;
+  border: 1px solid black;
+  text-align: center;
+}
+#inventoryTable > thead {
+  background: #cdcdcd;
+}
+#inventoryTable > thead > tr > th:hover {
+  color: #0066FF;
+  text-decoration: underline;
+}
+#inventoryTable > tbody tr:nth-child(even) {
+  background: #f0f0f0;
+}
+#inventoryTable > tbody tr:hover {
+  font-size: 17px;
+  font-weight: bold;
+
+}
+
+/*========= Footer =========*/
+.footer {
+  background: #5ca326;
+  border: 1px solid black;
+  width: 95%;
+  height: 25px;
+  margin: 15px auto;
+  font-style: italic;
+  padding: 4px 0px;
+}
+.footer > p {
+  font-size: 12px;
+  text-align: center;
+}

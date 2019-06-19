@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>VLXDBK | <%= title %></title>
+
+    <!-- Fontawesome -->
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
+
+    <!-- CSS -->
+    <link rel='stylesheet' href='/stylesheets/orders/add_order.css' />
+    <link rel='stylesheet' href='/stylesheets/selectize/selectize.css' />
+  </head>
+  <body>
+
+    <!-- Nav bar -->  
+    <%- include('../components/navbar'); -%>
+
+    <!-- Wrapper -->
+    <div class="wrapper">
+      
+    <!-- Label -->
+    <%- include('../components/label'); -%>
+
+    <!-- Path -->
+    <%- include('../components/path'); -%>
+
+    <!-- Search box -->
+    <%- include('../components/search-box') -%>
+
+    <!-- MAIN -->
+    <div class="main">
+      <h1>Thêm đơn hàng</h1>
+
+      <form id="add-order-form">
+         <div class="row" id="row-1">
+            <div>
+               1. Loại sản phẩm: <select id="row-1-type_of_product">
+               <option value=""> ---</option>
+               <option value="Tinh bột Nghệ">Tinh bột Nghệ</option>
+               <option value="Tinh bột Gừng">Tinh bột Gừng</option>
+               <option value="Cucumin Nghệ">Cucumin Nghệ</option>
+               <option value="Hà thủ ô">Hà thủ ô</option>
+               </select><span style="color: red;"> *</span>
+               <br>
+               <p id="error-1-type_of_product"></p>
+            </div>
+
+            <div>
+               Khối lượng (kg): <input id="row-1-weight" type="text" name="weight" maxlength="5" size="5"><span style="color: red;"> *</span>
+               <br>
+               <p id="error-1-weight"></p>
+            </div>
+
+            <div>
+               Tên khách mua: <select id="row-1-customer">
+                  <option>Oanh em</option>
+                  <option>Tuấn NL</option>
+                  <option>Thuỷ cúng</option>
+               </select><span style="color: red;"> *</span>
+               <br>
+               <p id="error-1-customer"></p>
+            </div>
+
+            <div>
+               Đơn giá: <select id="row-1-price_per_unit">
+               <option value=""> ---</option>
+               <option value="500000">500,000 VNĐ</option>
+               <option value="600000">600,000 VNĐ</option>
+               <option value="700000">700,000 VNĐ</option>
+               <option value="1000000">1,000,000 VNĐ</option>
+               <option value="1200000">1,200,000 VNĐ</option>
+               </select><span style="color: red;"> *</span>
+               <br>
+               <p id="error-1-price_per_unit"></p>
+            </div>
+
+            <div>
+               Giảm giá: <input id="row-1-discount" type="text" name="discount" size="10" maxlength="10">
+               <br>
+               <p id="error-1-discount"></p>
+            </div>
+
+            <div>
+               Thành tiền: <input id="row-1-customer" type="text" name="customer" size="10" maxlength="10">
+               <br>
+            </div>
+
+            <div>
+               Ngày bán: <input id="row-1-date_created" type="text" name="date_created" size="10" maxlength="10"> <i>( vd: 01/01/2019 )</i><span style="color: red;"> *</span>
+               <br>
+               <p id="error-1-date_created"></p>
+            </div>
+
+            <div>
+               Ghi chú: <textarea id="row-1-notes" rows="1" cols="25"></textarea>
+               <br>
+               <p id="error-1-notes"></p>
+            </div>
+         </div>
+      </form>
+        
+      <div id="insertRows">
+        Thêm dòng: <input id="addRowInput" type="text" maxlength="2" size="2" value=""><button id="addRow">Thêm</button>
+      </div>
+      
+      <br />
+
+      <div id="formBtn">
+        <button id="cancelBtn" type="button" onclick="location.href='/orders';">Huỷ</button>
+        <button id="addBtn" type="submit">Thêm</button>
+      </div>
+
+      <p style="float: right;"><span style="color: red;">*</span> = Bắt buộc.</p>
+    </div>
+
+  <!-- Footer -->
+  <%- include('../components/footer'); -%>
+
+  <!-- Javascripts -->
+  <script src="/javascripts/jquery-3.3.1.min.js"></script>
+  <script src="/javascripts/selectize/selectize.js"></script>
+
+   <!-- jQuery -->
+   <script>
+   $(document).ready(() => {
+      let row_index = 1;
+
+      ///////////////////////////////
+      //       Add more rows       //
+      ///////////////////////////////
+      $('#addRow').click(function() {
+         const numRows = $('#addRowInput').val();
+
+         if (numRows !== null) {
+            for (let i = 0; i < numRows; i++) {
+               row_index++; // select next row
+               
+               // Append more rows to form
+               $('#add-order-form').append(`
+                  <div class="row" id="row-1">
+                     <div>
+                        ${row_index}. Loại sản phẩm: <select id="row-${row_index}-type_of_product">
+                        <option value=""> ---</option>
+                        <option value="Tinh bột Nghệ">Tinh bột Nghệ</option>
+                        <option value="Tinh bột Gừng">Tinh bột Gừng</option>
+                        <option value="Cucumin Nghệ">Cucumin Nghệ</option>
+                        <option value="Hà thủ ô">Hà thủ ô</option>
+                        </select><span style="color: red;"> *</span>
+                        <br>
+                        <p id="error-${row_index}-type_of_product"></p>
+                     </div>
+
+                     <div>
+                        Khối lượng (kg): <input id="row-${row_index}-weight" type="text" name="weight" maxlength="5" size="5"><span style="color: red;"> *</span>
+                        <br>
+                        <p id="error-${row_index}-weight"></p>
+                     </div>
+
+                     <div>
+                        Tên khách mua: <select id="row-${row_index}-customer">
+                           <option>Oanh em</option>
+                           <option>Tuấn NL</option>
+                           <option>Thuỷ cúng</option>
+                        </select><span style="color: red;"> *</span>
+                        <br>
+                        <p id="error-${row_index}-customer"></p>
+                     </div>
+
+                     <div>
+                        Đơn giá: <select id="row-${row_index}-price_per_unit">
+                        <option value=""> ---</option>
+                        <option value="500000">500,000 VNĐ</option>
+                        <option value="600000">600,000 VNĐ</option>
+                        <option value="700000">700,000 VNĐ</option>
+                        <option value="1000000">1,000,000 VNĐ</option>
+                        <option value="1200000">1,200,000 VNĐ</option>
+                        </select><span style="color: red;"> *</span>
+                        <br>
+                        <p id="error-${row_index}-price_per_unit"></p>
+                     </div>
+
+                     <div>
+                        Giảm giá: <input id="row-${row_index}-discount" type="text" name="discount" size="10" maxlength="10">
+                        <br>
+                        <p id="error-${row_index}-discount"></p>
+                     </div>
+
+                     <div>
+                        Thành tiền: <input id="row-${row_index}-customer" type="text" name="customer" size="10" maxlength="10">
+                        <br>
+                     </div>
+
+                     <div>
+                        Ngày bán: <input id="row-${row_index}-date_created" type="text" name="date_created" size="10" maxlength="10"> <i>( vd: 01/01/2019 )</i><span style="color: red;"> *</span>
+                        <br>
+                        <p id="error-${row_index}-date_created"></p>
+                     </div>
+
+                     <div>
+                        Ghi chú: <textarea id="row-${row_index}-notes" rows="1" cols="25"></textarea>
+                        <br>
+                        <p id="error-${row_index}-notes"></p>
+                     </div>
+                  </div>
+               `); // END APPEND ROWS
+
+               // Create `selectize` for each row
+               $(`#row-${row_index}-customer`).selectize({
+                  create: true,
+                  sortField: 'text',
+                  render: {
+                     option_create: function(data, escape) {
+                        return '<div class="create">Thêm: <strong>' + escape(data.input) + '</strong>&hellip;</div>';
+                     }
+                  }
+               }); // END SELECTIZE
+            } // END FOR
+         } // END IF
+      }); // END ADD 
+      
+
+      ///////////////////////////////
+      //         Selectize         //
+      ///////////////////////////////
+      $(`#row-1-customer`).selectize({ // FIRST ROW
+         create: true,
+         sortField: 'text',
+         render: {
+            option_create: function(data, escape) {
+               return '<div class="create">Thêm: <strong>' + escape(data.input) + '</strong>&hellip;</div>';
+            }
+         }
+      });
+
+   });
+   </script>
+   </body>
+</html>

@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>VLXDBK | <%= title %></title>
+
+    <!-- Fontawesome -->
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
+
+    <!-- CSS -->
+    <link rel='stylesheet' href='/stylesheets/orders/style.css' />
+  </head>
+  <body>
+
+    <!-- Nav bar -->  
+    <%- include('../components/navbar'); -%>
+
+    <!-- Wrapper -->
+    <div class="wrapper">
+      
+      <!-- Label -->
+      <%- include('../components/label'); -%>
+
+      <!-- Path -->
+      <%- include('../components/path'); -%>
+
+      <!-- Search box -->
+      <%- include('../components/search-box') -%>
+
+      <!-- MAIN -->
+      <div class="main">
+        <h1>Danh sách đơn hàng</h1>
+
+        <!-- Add Inventory button -->
+        <a href="/orders/add" ><i class="fas fa-plus"></i>Thêm đơn hàng</a>
+
+        <!-- TABLE -->
+        <table class="compact hover cell-border" id="ordersTable" style="width: 90%;">
+          <thead>
+            <tr>
+              <th>Mã đơn</th>
+              <th>Khách hàng</th>
+              <th>Loại sản phẩm</th>
+              <th>Khối lượng (kg)</th>
+              <th>Đơn giá</th>
+              <th>Thành tiền</th>
+              <th>Đã trả</th>
+              <th>Còn nợ</th>
+              <th>Ngày bán</th>
+              <th>Ghi chú</th>
+            </tr>
+          </thead>
+          <tbody>
+            <!-- Table data generates here -->
+          </tbody>
+        </table>
+      </div>
+
+    </div>
+
+    <!-- Footer -->
+    <%- include('../components/footer'); -%>
+  </body>
+</html>

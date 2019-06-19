@@ -1,0 +1,219 @@
+* {
+   margin: 0;
+   padding: 0;
+   box-sizing: border-box;
+ }
+ 
+ body {
+   font-family: '-apple-system', BlinkMacSystemFont, sans-serif;
+ }
+ 
+ /*========= Nav bar =========*/
+ .navbar {
+   display: grid;
+   grid-template-columns: repeat(5, 1fr);
+   width: 960px;
+   margin: 15px auto;
+   overflow: hidden;
+ }
+ .navbar a {
+   border: 2px solid black;
+   background-color: #006599;
+   color: #fff;
+   text-align: center;
+   text-decoration: none;
+   font-size: 15px;
+   width: 150px;
+   height: 40px;
+   padding: 8px 0;
+   margin: 0 auto;
+ }
+ .navbar a:hover {
+   background-color: #5ca326;
+   color: black;
+ }
+ 
+ /*========= Wrapper =========*/
+ .wrapper {
+   width: 95%;
+   margin: 0 auto;
+   font-size: 14px;
+ }
+ 
+ /* Label */
+ .label {
+   background: #5ca326;
+   border: 1px solid black;
+   height: 45px;
+   padding: 10px 15px;
+ }
+ .label-title {
+   font-size: 20px;
+ }
+ .label-time {
+   float: right;
+   font-size: 12px;
+   font-style: italic;
+   margin-top: 5px;
+ }
+ 
+ /* Path */
+ ul.path {
+   margin: 15px auto;
+   width: 95%;
+   padding: 10px 16px;
+   list-style: none;
+   background-color: #f0f0f0;
+   border: 1px solid black;
+ }
+ ul.path li {
+   display: inline;
+   font-size: 16px;
+ }
+ ul.path li+li:before {
+   padding: 8px;
+   color: black;
+   content: ">\00a0";
+ }
+ ul.path li a {
+   color: #0275d8;
+   text-decoration: none;
+ }
+ ul.path li a:hover {
+   color: #01447e;
+   text-decoration: underline;
+ }
+ 
+ /* Inventory class Search box */
+ .inventory-search {
+   display: grid;
+   grid-template-columns: repeat(2, 1fr);
+   width: 95%;
+   height: 50px;
+   margin: 0 auto;
+   background-color: #f0f0f0;
+   border: 1px solid black;
+   text-align: center;
+   padding: 15px;
+ }
+ .inventory-search > div > input {
+   border: 1px solid #cdcdcd;
+   padding-left: 7px;
+   width: 170px;
+   height: 20px;
+   margin: 0 2px;
+ }
+ ::-webkit-input-placeholder {
+   font-style: italic;
+ }
+ 
+ /*========= Main =========*/
+ .main {
+   display: block;
+   overflow: auto;
+   margin: 15px auto;
+   width: 95%;
+   border: 1px solid black;
+   padding-bottom: 15px;
+   padding-right: 10px;
+   padding-left: 10px;
+ }
+
+.success {
+  margin: 50px auto;
+  width: 500px;
+  border: 1px solid #5bb76a;
+  padding: 50px;
+  text-align: center;
+}
+.success > h1 {
+  margin: 0 auto 10px auto;
+  color: #5bb76a;
+  text-decoration: none;
+}
+.success > a {
+  color: #007bff;
+  text-decoration: none;
+}
+.success > a:hover {
+  text-decoration: underline;
+}
+ 
+ h1 {
+   width: 400px;
+   margin: 30px auto 50px auto;
+   text-decoration: underline;
+   text-align: center;
+ }
+
+ /* Form's rows */
+ .row {
+   display: block;
+   overflow: auto;
+   margin: 10px auto;
+   width: 1024px;
+   border: 1px solid #f0f0f0;
+   padding: 10px 0 10px 25px;
+ }
+ .row:hover {
+    background-color: #f0f0f0;
+ }
+ .row p { /* Error message */
+   font-style: italic;
+   font-size: 12px;
+   margin: 5px 10px 0 0;
+ }
+ 
+  /* Form submit buttons */
+ .main > #formBtn {
+   text-align: center;
+ }
+ #addInventoryBtn {
+   border: 1px solid black;
+   margin: 0 3px;
+   background-color: #006599;
+   color: #fff;
+   width: 50px;
+   height: 20px;
+ }
+#cancelInventoryBtn {
+   border: 1px solid black;
+   margin: 0 3px;
+   width: 50px;
+   height: 20px;
+ }
+ #formBtn > button:hover {
+   background-color: #5ca326;
+   color: black;
+ }
+
+/* Form add row button */
+#insertRows {
+   margin: 15px auto;
+   width: 960px;
+   text-align: end;
+}
+#insertRows > button {
+   margin: 0 0 0 5px;
+   width: 45px;
+   height: 20px;
+}
+#insertRows > button:hover {
+   background-color: #0066FF;
+   color: #fff;
+}
+ 
+ /*========= Footer =========*/
+ .footer {
+   background: #5ca326;
+   border: 1px solid black;
+   width: 95%;
+   height: 25px;
+   margin: 15px auto;
+   font-style: italic;
+   padding: 4px 0px;
+ }
+ .footer > p {
+   font-size: 12px;
+   text-align: center;
+ }

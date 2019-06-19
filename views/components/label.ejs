@@ -1,0 +1,14 @@
+<%
+   // Get current timestamp
+   const d = new Date();
+   const day = (d.getDay()+1 === 1) ? 'CN' : d.getDay()+1;
+   const date = d.getDate();
+   const month = d.getMonth()+1;
+   const year = d.getFullYear();
+   const hour = d.getHours();
+   const minute = d.getMinutes() > 9 ? d.getMinutes() : "0" + d.getMinutes();
+%>
+<div class="label">
+   <span class="label-title">VLXDBK | <%= title %></span>
+   <span class="label-time"><%= `Thứ ${day}, Ngày ${date}/${month}/${year} - ${hour} : ${minute}` %></span>
+</div>

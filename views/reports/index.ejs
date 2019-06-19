@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>VLXDBK | <%= title %></title>
+
+    <!-- Fontawesome -->
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
+
+    <!-- CSS -->
+    <link rel='stylesheet' href='/stylesheets/reports/style.css' />
+  </head>
+  <body>
+
+    <!-- Nav bar -->  
+    <%- include('../components/navbar'); -%>
+
+    <!-- Wrapper -->
+    <div class="wrapper">
+      
+      <!-- Label -->
+      <%- include('../components/label'); -%>
+
+      <!-- Path -->
+      <%- include('../components/path'); -%>
+
+      <!-- Search box -->
+      <%- include('../components/search-box') -%>
+
+    </div>
+
+    <!-- Footer -->
+    <%- include('../components/footer'); -%>
+  </body>
+</html>
